@@ -25,7 +25,7 @@ git clone https://github.com/SinfonIAUniandes/robot_toolkit_msgs
 git clone https://github.com/ros-naoqi/naoqi_bridge_msgs
 cd naoqi_driver_sinfonia
 pip install -r requirements.txt
-cd ..
+cd ../..
 catkin_make
 . devel/setup.bash
 roslaunch naoqi_driver robot_toolkit.launch
