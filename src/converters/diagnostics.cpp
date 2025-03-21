@@ -62,10 +62,10 @@ DiagnosticsConverter::DiagnosticsConverter( const std::string& name, float frequ
     p_body_temperature_ = session->service("ALBodyTemperature").value();
 
     // Only call setEnableNotifications if NAOqi < 2.9
-    if (helpers::driver::isNaoqiVersionLesser(naoqi_version_, 2, 9))
-    {
-      p_body_temperature_.call<void>("setEnableNotifications", true);
-    }
+    //if (helpers::driver::isNaoqiVersionLesser(naoqi_version_, 2, 9))
+    //{
+    //  p_body_temperature_.call<void>("setEnableNotifications", true);
+    //}
   }
 
   std::vector<std::vector<float> > joint_limits;
