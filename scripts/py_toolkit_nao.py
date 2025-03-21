@@ -1165,7 +1165,7 @@ if __name__ == "__main__":
             print(consoleFormatter.format("Robot is in default position!", "OKGREEN"))
         if pytoolkit.ALBasicAwareness.isEnabled():
             pytoolkit.ALBasicAwareness.setEnabled(False)
-        #pytoolkit.ALTrackerService.stopTracker()
+        pytoolkit.ALTrackerService.stopTracker()
         pytoolkit.ALSpeakingMovement.setEnabled(True)
         time.sleep(1)
         print(
