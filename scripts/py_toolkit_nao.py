@@ -65,7 +65,7 @@ class PyToolkit:
     def __init__(self, session):
 
         # CONSTANTS
-        self.PYTOOLKIT_FOLDER = rospkg.RosPack().get_path("py_toolkit")
+        self.PYTOOLKIT_FOLDER = rospkg.RosPack().get_path("naoqi_driver")
         # Crea una constante para guardar las id's conseguidas por el pytoolkit/perception
         self.id = 0
         # Publishers
@@ -1017,6 +1017,7 @@ class PyToolkit:
             consoleFormatter.format("\nRequested ALTracker/stop_tracker_srv", "WARNING")
         )
         self.callback_motion_move_head_srv(move_head_srvRequest("default"))
+        self.ALTrackerService.setEffector("None")
         self.ALTrackerService.stopTracker()
         self.ALTrackerService.unregisterAllTargets()
         print(consoleFormatter.format("Tracker has stopped!", "OKGREEN"))
@@ -1030,10 +1031,15 @@ class PyToolkit:
             )
         )
         self.callback_motion_move_head_srv(move_head_srvRequest("default"))
+        self.ALTrackerService.setEffector("None")
         targetName = "Face"
         faceWidth = 0.1
         self.ALTrackerService.registerTarget(targetName, faceWidth)
-        self.ALTrackerService.track("targetName")
+        self.ALTrackerService.setRelativePosition([0.3, 0.0, 0.0,
+                                                   0.1, 0.1, 0.3])
+        self.ALTrackerService.setMode("Head")
+        self.ALTrackerService.track(targetName)
+        self.ALTrackerService.initialize()
         print(consoleFormatter.format("Tracker has started!", "OKGREEN"))
         return "OK"
 
@@ -1159,8 +1165,7 @@ if __name__ == "__main__":
             print(consoleFormatter.format("Robot is in default position!", "OKGREEN"))
         if pytoolkit.ALBasicAwareness.isEnabled():
             pytoolkit.ALBasicAwareness.setEnabled(False)
-        pytoolkit.ALTrackerService.setMaximumDistanceDetection(0.1)
-        pytoolkit.ALTrackerService.stopTracker()
+        #pytoolkit.ALTrackerService.stopTracker()
         pytoolkit.ALSpeakingMovement.setEnabled(True)
         time.sleep(1)
         print(

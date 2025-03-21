@@ -1,6 +1,6 @@
 <launch>
 
-  <arg name="nao_ip"            default="$(optenv NAO_IP)" />
+  <arg name="nao_ip"            default="$(optenv NAO_IP 157.253.113.142)" />
   <arg name="nao_port"          default="$(optenv NAO_PORT 9559)" />
   <arg name="roscore_ip"        default="127.0.0.1" />
   <arg name="network_interface" default="eth0" />
