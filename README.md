@@ -13,6 +13,25 @@ For **noetic**, on Ubuntu 20.04:
 sudo apt install ros-noetic-naoqi-driver
 ```
 
+## Build
+
+```sh
+mkdir nao_toolkit_ws
+cd nao_toolkit_ws
+mkdir src
+cd src
+git clone https://github.com/SinfonIAUniandes/naoqi_driver_sinfonia
+git clone https://github.com/SinfonIAUniandes/robot_toolkit_msgs
+git clone https://github.com/ros-naoqi/naoqi_bridge_msgs
+cd naoqi_driver_sinfonia
+pip install -r requirements.txt
+cd ..
+catkin_make
+. devel/setup.bash
+roslaunch naoqi_driver robot_toolkit.launch
+```
+
+
 ## Dependencies
 
 To run, the driver requires the [`naoqi_libqi`](https://github.com/ros-naoqi/libqi), [`naoqi_libqicore`](https://github.com/ros-naoqi/libqicore) and [`naoqi_bridge_msgs`](https://github.com/ros-naoqi/naoqi_bridge_msgs) packages. Those can be installed using apt-get (if they have been released for your ROS distro) or from source. Additionally, [`pepper_meshes`](https://github.com/ros-naoqi/pepper_meshes) and/or [`nao_meshes`](https://github.com/ros-naoqi/nao_meshes) can be useful if you try to display the robot in RViz.
