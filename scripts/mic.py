@@ -57,7 +57,7 @@ if __name__ == '__main__':
     except RuntimeError as e:
         rospy.logwarn("Failed to set listen URL: %s", str(e))
 
-    robot_ip = rospy.get_param("~robot_ip", "157.253.113.142")
+    robot_ip = rospy.get_param("~robot_ip", "127.0.0.1")
     port = rospy.get_param("~port", 9559)
     
     try:

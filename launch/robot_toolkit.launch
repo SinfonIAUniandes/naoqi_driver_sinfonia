@@ -1,20 +1,38 @@
 <launch>
-  <arg name="nao_ip" default="$(optenv NAO_IP 157.253.113.142)" />
+  <arg name="nao_ip" default="$(optenv NAO_IP)" />
   <arg name="nao_port" default="$(optenv NAO_PORT 9559)" />
   <arg name="roscore_ip" default="127.0.0.1" />
-  <arg name="network_interface" default="eno1" />
+  <arg name="network_interface" default="eth0" />
   <arg name="namespace" default="robot_toolkit_node" />
   <arg name="user" default="nao" />
   <arg name="password" default="no_password" />
 
-  <node pkg="naoqi_driver" type="naoqi_driver_node" name="$(arg namespace)" required="true" args="--qi-url=tcp://$(arg nao_ip):$(arg nao_port) --nao_ip=$(arg nao_ip) --nao_port=$(arg nao_port) --user=$(arg user) --password=$(arg password) --roscore_ip=$(arg roscore_ip) --network_interface=$(arg network_interface) --namespace=$(arg namespace)" output="screen"/>
-  <node pkg="naoqi_driver" type="touch.py" name="touch" output="screen"/>
-  <node pkg="naoqi_driver" type="speech.py" name="speech" output="screen"/>
-  <node pkg="naoqi_driver" type="py_toolkit_nao.py" name="pytoolkit" output="screen"/>
-  <node pkg="naoqi_driver" type="animations.py" name="animations" output="screen"/>
-  <node pkg="naoqi_driver" type="leds.py" name="leds" output="screen"/>
-  <node pkg="naoqi_driver" type="sonar.py" name="sonar" output="screen"/>
-  <node pkg="naoqi_driver" type="mic.py" name="mic" output="screen"/>
-  <node pkg="naoqi_driver" type="fake_tools.py" name="fake_tools" output="screen"/>
+  <node pkg="naoqi_driver" type="naoqi_driver_node" name="$(arg namespace)" required="true" args="--qi-url=tcp://$(arg nao_ip):$(arg nao_port) --nao_ip=$(arg nao_ip) --nao_port=$(arg nao_port) --user=$(arg user) --password=$(arg password) --roscore_ip=$(arg roscore_ip) --network_interface=$(arg network_interface) --namespace=$(arg namespace)" output="screen">
+    <param name="robot_ip" value="$(arg nao_ip)" />
+  </node>
+
+  <node pkg="naoqi_driver" type="py_toolkit_nao.py" name="pytoolkit" output="screen" args="--ip $(arg nao_ip) --port $(arg nao_port)"/>
+
+  <node pkg="naoqi_driver" type="animations.py" name="animations" output="screen">
+    <param name="robot_ip" value="$(arg nao_ip)" />
+  </node>
+  <node pkg="naoqi_driver" type="leds.py" name="leds" output="screen">
+    <param name="robot_ip" value="$(arg nao_ip)" />
+  </node>
+  <node pkg="naoqi_driver" type="mic.py" name="mic" output="screen">
+    <param name="robot_ip" value="$(arg nao_ip)" />
+  </node>
+  <node pkg="naoqi_driver" type="fake_tools.py" name="fake_tools" output="screen">
+    <param name="robot_ip" value="$(arg nao_ip)" />
+  </node>
+  <node pkg="naoqi_driver" type="touch.py" name="touch" output="screen">
+    <param name="robot_ip" value="$(arg nao_ip)" />
+  </node>
+  <node pkg="naoqi_driver" type="speech.py" name="speech" output="screen">
+    <param name="robot_ip" value="$(arg nao_ip)" />
+  </node>
+  <node pkg="naoqi_driver" type="sonar.py" name="sonar" output="screen">
+    <param name="robot_ip" value="$(arg nao_ip)" />
+  </node>
 
 </launch>

@@ -33,8 +33,7 @@ class ReactToTouch(object):
         session = app.session
         self.memory_service = session.service("ALMemory")
 
-        # Initialize ROS node
-        rospy.init_node("naoqi_touch_publisher", anonymous=True)
+        # ROS node initialization moved to main so get_param works correctly
         self.publisher = rospy.Publisher("/touch", touch_msg, queue_size=10)
 
         # Subscribe to NAOqi "TouchChanged" event
@@ -64,9 +63,12 @@ class ReactToTouch(object):
 
 
 if __name__ == "__main__":
+    # Initialize ROS node before reading parameters so rospy.get_param("~robot_ip", ...) reads launch args
+    rospy.init_node("naoqi_touch_publisher", anonymous=True)
+
     try:
         # Initialize NAOqi framework
-        robot_ip = rospy.get_param("~robot_ip", "157.253.113.142")
+        robot_ip = rospy.get_param("~robot_ip", "127.0.0.1")
         port = rospy.get_param("~port", 9559)
         connection_url = f"tcp://{robot_ip}:{port}"
         app = qi.Application(["ReactToTouch", "--qi-url=" + connection_url])

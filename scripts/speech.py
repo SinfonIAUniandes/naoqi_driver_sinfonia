@@ -11,7 +11,7 @@ class SpeechSubscriber:
         self.language = "English"
         self.speech_service.setLanguage(self.language)
         
-        rospy.init_node("speech_subscriber", anonymous=True)
+        # rospy.init_node moved to main to allow get_param to work before creating the node
         self.subscriber = rospy.Subscriber("/speech", speech_msg, self.speech_callback)
         rospy.loginfo("Speech Subscriber initialized.")
 
@@ -60,8 +60,11 @@ class SpeechSubscriber:
         rospy.spin()
 
 if __name__ == "__main__":
+    # Initialize ROS node before reading parameters so rospy.get_param("~robot_ip", ...) reads launch args
+    rospy.init_node("speech_subscriber", anonymous=True)
+
     session = qi.Session()
-    robot_ip = rospy.get_param("~robot_ip", "157.253.113.142")
+    robot_ip = rospy.get_param("~robot_ip", "127.0.0.1")
     port = rospy.get_param("~port", 9559)
     try:
         session.connect(f"tcp://{robot_ip}:{port}")

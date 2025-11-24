@@ -13,8 +13,8 @@ def get_sonar_data(memory_service):
     return left_value, right_value
 
 def publish_sonar_data(session):
-    """Initialize ROS node and publish sonar data."""
-    rospy.init_node("nao_sonar_publisher", anonymous=True)
+    """Initialize ROS publishers and publish sonar data."""
+    # rospy.init_node("nao_sonar_publisher", anonymous=True)  # moved to main
     left_pub = rospy.Publisher("/nao/sonar/left", Range, queue_size=10)
     right_pub = rospy.Publisher("/nao/sonar/right", Range, queue_size=10)
     
@@ -57,7 +57,10 @@ def publish_sonar_data(session):
     rospy.loginfo("Unsubscribed from NAO sonars.")
 
 if __name__ == "__main__":
-    robot_ip = rospy.get_param("~robot_ip", "157.253.113.142")
+    rospy.init_node("nao_sonar_publisher", anonymous=True)
+
+    robot_ip = rospy.get_param("~robot_ip", "127.0.0.1")
+    rospy.loginfo(f"Robot IP: {robot_ip}")
     port = rospy.get_param("~port", 9559)
     
     session = qi.Session()

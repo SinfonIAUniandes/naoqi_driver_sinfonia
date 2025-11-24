@@ -1131,7 +1131,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--ip",
         type=str,
-        default="157.253.113.142",
+        default="127.0.0.1",
         help="Robot IP address. On RObot or Local Naoqi: use '127.0.0.1'.",
     )
     parser.add_argument("--port", type=int, default=9559, help="Naoqi port number")
